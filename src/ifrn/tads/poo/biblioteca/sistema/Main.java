@@ -1,5 +1,6 @@
 package ifrn.tads.poo.biblioteca.sistema;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -20,11 +21,9 @@ public class Main {
 	}
 
 	public static void devolver(int codUsu,Biblioteca biblioteca, Scanner sc, ItemAcervo alugado){
-
-	
-
 		Usuario usu = null;
 		int dev = 0;
+		double multa = 0;
 		usu = biblioteca.buscaUsuario(codUsu);
 		ItemAcervo[] aluPeUsu = new ItemAcervo[usu.qtdAlugados()];
 		aluPeUsu = usu.listaAlugados();
@@ -32,15 +31,37 @@ public class Main {
 	    System.out.println("Digite uma data nesse formato dd/mm/yyyy: ");
 		String dataRecebida = sc.nextLine();
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");  
-		Date dt = df.parse(dataRecebida);
-
-		if (alugado.getPago()==false){
-			if (biblioteca.CalcDias(dt,alugado.getDataDevolucao()) > 0 ){
-				
-			}
-			System.out.println("Pagar? S/N");
-			if(sc.hasNext())
+		Date dt = null;
+		try {
+			dt = df.parse(dataRecebida);
+		} catch (ParseException e) {			
+			e.printStackTrace();
 		}
+		Calendar diaEntrega = Calendar.getInstance();
+		Calendar diaLim = Calendar.getInstance();
+		diaLim.setTime(alugado.getDataDevolucao());
+		diaEntrega.setTime(dt);
+		if (alugado.getPago()==false){
+			if (biblioteca.CalcDias(diaEntrega,diaLim) > 0 ){
+				if(alugado instanceof Livro){
+					multa  = 2.0;
+					System.out.printf("O valor a ser pago é: %f. "
+							+ "Valor do livro: %f + Valor da multa por %d dias de atraso:"
+							+ "%f",(alugado.getCusto() + (multa*biblioteca.CalcDias(diaEntrega,diaLim))), alugado.getCusto(),biblioteca.CalcDias(diaEntrega,diaLim));
+				}else if(alugado instanceof Apostila){
+					multa  = 1.5;
+					System.out.printf("O valor a ser pago é: %f. "
+							+ "Valor da apostila: %f + Valor da multa por %d dias de atraso:"
+							+ "%f",(alugado.getCusto() + (multa*biblioteca.CalcDias(diaEntrega,diaLim))), alugado.getCusto(),biblioteca.CalcDias(diaEntrega,diaLim));
+				}else if(alugado instanceof Texto){
+					multa  = 2.0;
+					System.out.printf("O valor a ser pago é: %f. "
+							+ "Valor do Texto: %f + Valor da multa por %d dias de atraso:"
+							+ "%f",(alugado.getCusto() + (multa*biblioteca.CalcDias(diaEntrega,diaLim))), alugado.getCusto(),biblioteca.CalcDias(diaEntrega,diaLim));
+				}
+				
+			}			
+		}else if()
 
 		System.out.println("Escolha o item a ser devolvido: ");
 		for(int i = 0; i < aluPeUsu.length; i++){
