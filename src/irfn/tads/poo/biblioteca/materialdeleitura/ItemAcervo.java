@@ -30,7 +30,6 @@ public abstract class ItemAcervo {
 	}
 	public Date getDataAluguel(){
 		return this.dataAluguel;
-
 	}
 	public Date getDataDevolucao(){
 		return this.dataDevolucao;		

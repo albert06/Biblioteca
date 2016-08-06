@@ -45,8 +45,19 @@ public class Usuario {
 		listAlu = this.alugados.toArray(listAlu);
 		return listAlu;
 	}
+	public ItemAcervo[] listaReservados(){
+		ItemAcervo[] lR = new ItemAcervo[this.reservados.size()];
+		lR = this.reservados.toArray(lR);
+		return lR;
+	}
 	public int qtdAlugados(){
 		return this.alugados.size();
+	}
+	public int qtdReservados(){
+		return this.reservados.size();
+	}
+	public String getEnd(){
+		return this.endereco;
 	}
 }
 
