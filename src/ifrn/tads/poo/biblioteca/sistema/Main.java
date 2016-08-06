@@ -20,76 +20,77 @@ public class Main {
 		biblioteca.addAdm(adm);
 	}
 
-	public static void devolver(int codUsu,Biblioteca biblioteca, Scanner sc, ItemAcervo alugado){
+	public static void devolver(int codUsu,Biblioteca biblioteca, Scanner sc){
 		Usuario usu = null;
-		int dev = 0;
+		int dev = 0,i;
 		double multa = 0;
 		usu = biblioteca.buscaUsuario(codUsu);
 		ItemAcervo[] aluPeUsu = new ItemAcervo[usu.qtdAlugados()];
 		aluPeUsu = usu.listaAlugados();
 
-	    System.out.println("Digite uma data nesse formato dd/mm/yyyy: ");
+	    
+
+		System.out.println("Escolha o item a ser devolvido: ");
+		for(i = 0; i < aluPeUsu.length; i++){
+			System.out.printf("Cod: %d, Titulo: %s",aluPeUsu[i].getCodigoItem(),aluPeUsu[i].getTitulo());
+		}
+		if(sc.hasNextInt())
+			dev = sc.nextInt() - 1;
+		System.out.println("Digite uma data nesse formato dd/mm/yyyy: ");
 		String dataRecebida = sc.nextLine();
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");  
 		Date dt = null;
 		try {
 			dt = df.parse(dataRecebida);
 		} catch (ParseException e) {			
-			e.printStackTrace();
+			System.out.println("Formato de data inválido!");
 		}
 		Calendar diaEntrega = Calendar.getInstance();
 		Calendar diaLim = Calendar.getInstance();
-		diaLim.setTime(alugado.getDataDevolucao());
-		diaEntrega.setTime(dt);
-		if (alugado.getPago()){
+		diaLim.setTime(aluPeUsu[dev].getDataDevolucao());
+		diaEntrega.setTime(dt);	
+		if (aluPeUsu[dev].getPago()){
 			if (biblioteca.CalcDias(diaEntrega,diaLim) > 0 ){
-				if(alugado instanceof Livro){
+				if(aluPeUsu[dev] instanceof Livro){
 					multa  = 2.0;
 					System.out.printf("O valor a ser pago é: %f. "
 							+ "Valor da multa por %d dias de atraso:"
-							+ "%f",(multa*biblioteca.CalcDias(diaEntrega,diaLim)), alugado.getCusto());
-				}else if(alugado instanceof Apostila){
+							+ "%f",(multa*biblioteca.CalcDias(diaEntrega,diaLim)), aluPeUsu[dev].getCusto());
+				}else if(aluPeUsu[dev] instanceof Apostila){
 					multa  = 1.5;
 					System.out.printf("O valor a ser pago é: %f. "
 							+ "Valor da multa por %d dias de atraso:"
-							+ "%f",(multa*biblioteca.CalcDias(diaEntrega,diaLim)), alugado.getCusto());
-				}else if(alugado instanceof Texto){
+							+ "%f",(multa*biblioteca.CalcDias(diaEntrega,diaLim)), aluPeUsu[dev].getCusto());
+				}else if(aluPeUsu[dev] instanceof Texto){
 					multa  = 2.0;
 					System.out.printf("O valor a ser pago é: %f. "
 							+ "Valor da multa por %d dias de atraso:"
-							+ "%f",(multa*biblioteca.CalcDias(diaEntrega,diaLim)), alugado.getCusto());
+							+ "%f",(multa*biblioteca.CalcDias(diaEntrega,diaLim)), aluPeUsu[dev].getCusto());
 				}
 			}
 		}else {
 			if (biblioteca.CalcDias(diaEntrega,diaLim) > 0 ){
-				if(alugado instanceof Livro){
+				if(aluPeUsu[dev] instanceof Livro){
 					multa  = 2.0;
 					System.out.printf("O valor a ser pago é: %f. "
 							+ "Valor do livro: %f + Valor da multa por %d dias de atraso:"
-							+ "%f",(alugado.getCusto() + (multa*biblioteca.CalcDias(diaEntrega,diaLim))), alugado.getCusto(),biblioteca.CalcDias(diaEntrega,diaLim));
-				}else if(alugado instanceof Apostila){
+							+ "%f",(aluPeUsu[dev].getCusto() + (multa*biblioteca.CalcDias(diaEntrega,diaLim))), aluPeUsu[dev].getCusto(),biblioteca.CalcDias(diaEntrega,diaLim));
+				}else if(aluPeUsu[dev] instanceof Apostila){
 					multa  = 1.5;
 					System.out.printf("O valor a ser pago é: %f. "
 							+ "Valor da apostila: %f + Valor da multa por %d dias de atraso:"
-							+ "%f",(alugado.getCusto() + (multa*biblioteca.CalcDias(diaEntrega,diaLim))), alugado.getCusto(),biblioteca.CalcDias(diaEntrega,diaLim));
-				}else if(alugado instanceof Texto){
+							+ "%f",(aluPeUsu[dev].getCusto() + (multa*biblioteca.CalcDias(diaEntrega,diaLim))), aluPeUsu[dev].getCusto(),biblioteca.CalcDias(diaEntrega,diaLim));
+				}else if(aluPeUsu[dev] instanceof Texto){
 					multa  = 2.0;
 					System.out.printf("O valor a ser pago é: %f. "
 							+ "Valor do Texto: %f + Valor da multa por %d dias de atraso:"
-							+ "%f",(alugado.getCusto() + (multa*biblioteca.CalcDias(diaEntrega,diaLim))), alugado.getCusto(),biblioteca.CalcDias(diaEntrega,diaLim));
+							+ "%f",(aluPeUsu[dev].getCusto() + (multa*biblioteca.CalcDias(diaEntrega,diaLim))), aluPeUsu[dev].getCusto(),biblioteca.CalcDias(diaEntrega,diaLim));
 				}
 				
 			}else{
-				System.out.printf("O valor a ser pago é: %f. ",alugado.getCusto());
+				System.out.printf("O valor a ser pago é: %f. ",aluPeUsu[dev].getCusto());
 			}
 		}
-
-		System.out.println("Escolha o item a ser devolvido: ");
-		for(int i = 0; i < aluPeUsu.length; i++){
-			System.out.printf("Cod: %d, Titulo: %s",aluPeUsu[i].getCodigoItem(),aluPeUsu[i].getTitulo());
-		}
-		if(sc.hasNextInt())
-			dev = sc.nextInt() - 1;
 		if(aluPeUsu[dev] instanceof Livro){
 			biblioteca.adicionarLivro((Livro) aluPeUsu[dev], new Integer(1));
 		}else if(aluPeUsu[dev] instanceof Apostila){
@@ -99,6 +100,57 @@ public class Main {
 			biblioteca.adicionarTexto((Texto) aluPeUsu[dev], new Integer(1));
 		}			
 			usu.devolver(aluPeUsu[dev]);		
+	}
+	public static void reservar(int codUsu, Biblioteca biblioteca, int tipo, Scanner sc){
+		int i,escolha = 0;
+		Usuario usu = null;
+		usu = biblioteca.buscaUsuario(codUsu);
+		switch(tipo){
+			case 1:
+				Livro lL[] = new Livro[biblioteca.tamLivros()];
+				lL = biblioteca.listLivros();
+				System.out.println("Escolha o livro que deseja reservar: ");
+				for(i = 0; i < lL.length; i++){
+					System.out.printf("Cod: %d, Titulo: %s",lL[i].getCdg(),lL[i].getTitulo());
+				}
+				if(sc.hasNextInt())
+					escolha = sc.nextInt();
+				if(biblioteca.qtdDoLivro(lL[escolha - 1]) > 0)					
+					biblioteca.reservar(usu, lL[escolha - 1]);
+				else
+					System.out.println("Livro não disponivel para reserva!");
+				break;
+			case 2:
+				Apostila aL[] = new Apostila[biblioteca.qtdApo()];
+				aL = biblioteca.listApostila();
+				System.out.println("Escolha a apostila que deseja reservar: ");
+				for(i = 0; i < aL.length ; i++){
+					System.out.printf("Cod: %d, Titulo: %s",aL[i].getCodigoItem(),aL[i].getTitulo());
+				}
+				if(sc.hasNextInt())
+					escolha = sc.nextInt();
+				if(biblioteca.qtdUmaApo(aL[escolha - 1]) > 0)
+					biblioteca.reservar(usu, aL[escolha - 1]);
+				else
+					System.out.println("Apostila não está disponivel para reserva!");
+				break;
+			case 3:
+				Texto tL[] = new Texto[biblioteca.qtdTxt()];
+				tL = biblioteca.listTxt();
+				System.out.println("Escolha o texto que deseja reservar: ");
+				for(i = 0; i < tL.length ; i++){
+					System.out.printf("Cod: %d, Titulo: %s",tL[i].getCodigoItem(),tL[i].getTitulo());
+				}
+				if(sc.hasNextInt())
+					escolha = sc.nextInt();
+				if(biblioteca.qtdUmTxt(tL[escolha - 1]) > 0)
+					biblioteca.reservar(usu, tL[escolha]);
+				else
+					System.out.println("O Texto não está disponivel para reserva!");
+				break;
+			default:
+				break;
+		}
 	}
 	public static void alugar(int tipo, int codUsu, Biblioteca biblioteca, Scanner sc){
 		SimpleDateFormat format = new SimpleDateFormat();
@@ -118,9 +170,14 @@ public class Main {
 				System.out.println("Digite o código do livro que deseja alugar: ");
 				if(sc.hasNextInt())
 					escolha = sc.nextInt();
-				biblioteca.alugar(listaL[escolha - 1], data,7, codUsu);
-				System.out.printf("O livro deve ser entregue até o dia: ");
-				System.out.println(format.format(listaL[escolha].getDataDevolucao()));
+				if(biblioteca.qtdDoLivro(listaL[escolha-1]) > 0){
+					biblioteca.alugar(listaL[escolha - 1], data,7, codUsu);
+					System.out.printf("O livro deve ser entregue até o dia: ");
+					System.out.println(format.format(listaL[escolha].getDataDevolucao()));
+				}else
+					System.out.println("O livro não esta disponivel para alugar!");
+				
+				
 				break;
 			case 2:
 				Texto listaT[] = new Texto[biblioteca.qtdTxt()];
@@ -133,9 +190,13 @@ public class Main {
 				System.out.println("Digite o código do texto que deseja alugar: ");
 				if(sc.hasNextInt())
 					escolha = sc.nextInt();
-				biblioteca.alugar(listaT[escolha - 1], data, 15, codUsu);
-				System.out.printf("O texto deve ser entregue até o dia: ");
-				System.out.println(format.format(listaT[escolha].getDataDevolucao()));
+				if(biblioteca.qtdUmTxt(listaT[escolha-1]) > 0){
+					biblioteca.alugar(listaT[escolha - 1], data, 15, codUsu);
+					System.out.printf("O texto deve ser entregue até o dia: ");
+					System.out.println(format.format(listaT[escolha].getDataDevolucao()));
+				}else
+					System.out.println("O texto não está disponivel para alugar!");
+				
 				break;
 			case 3:
 				Apostila listaA[] = new Apostila[biblioteca.qtdApo()];
@@ -148,9 +209,12 @@ public class Main {
 				System.out.println("Digite o código da apostila que deseja alugar: ");
 				if(sc.hasNextInt())
 					escolha = sc.nextInt();
-				biblioteca.alugar(listaA[escolha - 1], data, 15, codUsu);
-				System.out.printf("A apostila deve ser entregue até o dia: ");
-				System.out.println(format.format(listaA[escolha].getDataDevolucao()));
+				if(biblioteca.qtdUmaApo(listaA[escolha-1]) > 0){
+					biblioteca.alugar(listaA[escolha - 1], data, 15, codUsu);
+					System.out.printf("A apostila deve ser entregue até o dia: ");
+					System.out.println(format.format(listaA[escolha].getDataDevolucao()));
+				}else
+					System.out.println("A apostila não está disponivel para alugar!");
 				break;
 		}
 		

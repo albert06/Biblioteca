@@ -17,28 +17,30 @@ String nomeBiblioteca;
 	Map<Texto, Integer> textos;
 	ArrayList<Administrador> admins;
 	ArrayList<Usuario> clientes;	
-	
+	// construtor da biblioteca, instancia as listagens;
 	public Biblioteca(String nome){
 		this.nomeBiblioteca = nome;
 		this.livros = new HashMap<>();
-		this.apostilas = new HashMap<>();   // construtor da biblioteca, instancia as listagens;
+		this.apostilas = new HashMap<>();   
 		this.textos = new HashMap<>();
 		this.admins = new ArrayList<Administrador>();
 		this.clientes = new ArrayList<Usuario>();
 	}
-	
+	//Verifica o tamanho do cpf
 	public int verificarCPF(String cpf){
 		int valido = 0;		
 		if(cpf.length() == 11){
-			valido = 0;          //Verifica o tamanho do cpf
+			valido = 0;          
 		}else
 			valido = 1;		
 		return valido;
 	}
+	//devolve um array de usuarios
 	public Usuario[] listUsu(){
 		Usuario listUsu[] = new Usuario[this.clientes.size()];
-		return this.livros.keySet().toArray(listUsu);
+		return this.livros.keySet().toArray(listUsu);         
 	}
+	// verifica se o cpf e o nome do cadastro do adm ja existe
 	public int veriAdm(Administrador adm){
 		int retorno = 0,i;
 		Administrador[] listAdm = new Administrador[this.admins.size()];
@@ -48,7 +50,7 @@ String nomeBiblioteca;
 				retorno = 1;
 				break;
 			}else if(adm.getCPF() == listAdm[i].getCPF()){
-				retorno = 2;
+				retorno = 2;            
 				break;
 			}else if((adm.getNome() == listAdm[(listAdm.length - 1) - i].getNome()) & (adm.getCPF() == listAdm[(listAdm.length - 1) - i].getCPF())){
 				retorno = 1;
@@ -60,6 +62,7 @@ String nomeBiblioteca;
 		}
 		return retorno;
 	}
+	// retorna um usuario baseado no código
 	public Usuario buscaUsuario(int cod){
 		int indice = -1,i = 0;		
 		Usuario[] listUsu = new Usuario[this.clientes.size()];
@@ -73,6 +76,7 @@ String nomeBiblioteca;
 		}
 		return listUsu[indice];		
 	}
+	// verifica se o ISBN do livro é valido ou ja existe um igual cadastrado
 	public boolean verificarISBN(String num){
 		boolean verdade  = false, repetido = false;
 		int i = 0;
@@ -90,60 +94,61 @@ String nomeBiblioteca;
 		}
 		return verdade;
 	}
+	// quantidade de uma apostila 
 	public int qtdUmaApo(Apostila apo){
 		if(this.apostilas.containsKey(apo))
 			return this.apostilas.get(apo);
 		return -1;
 	}
+	// quantidade de um texto
 	public int qtdUmTxt(Texto txt){
 		if(this.textos.containsKey(txt))
 			return this.textos.get(txt);
 		return -1;
 	}
+	// quantidade de apostilas da biblioteca
 	public int qtdApo(){
 		return this.apostilas.size();
 	}
+	// quantidade de textos da biblioteca
 	public int qtdTxt(){
 		return this.textos.size();
 	}
+	// retorna um array de textos
 	public Texto[] listTxt(){
 		Texto[] listTxt = new Texto[qtdApo()];
 		return this.textos.keySet().toArray(listTxt);
 	}
+	// retorna um array de livros
 	public Livro[] listLivros(){
 		Livro listLi[] = new Livro[tamLivros()];
 		return this.livros.keySet().toArray(listLi);
 	}
+	// retorna um array de apostilas
 	public Apostila[] listApostila(){
 		Apostila listApo[] = new Apostila[qtdApo()];
 		return this.apostilas.keySet().toArray(listApo);
 	}
+	// retorna a quantidade de livros cadastrados na biblioteca
 	public int tamLivros(){
 		return this.livros.size();
 	}
+	// quantidade individual de cada livro
 	public int qtdDoLivro(Livro livro){
 		if(this.livros.containsKey(livro)){
 			return this.livros.get(livro);
 		}
 		return -1;
 	}
+	// adiciona um livro na biblioteca
 	public void adicionarLivro(Livro novo, Integer qtd){
 		if(this.livros.containsKey(novo)){
 			this.livros.put(novo, new Integer(this.livros.get(qtd).intValue() + 1));
 		}
 		this.livros.put(novo, qtd);
 	}
-
-	public void alugar(ItemAcervo alugado,Date dataAluguel, int prazo, int cod, Scanner sc){
-		
-		Usuario vaiAlugar = null;
-		String pago = null;
-		System.out.println("Você quer pagar? S/N");
-		if(sc.hasNext())
-			pago = sc.next();
-		if((pago == "s") || (pago == "S"))
-			alugado.setPago(true);		
-	}
+	// metodo para alugar livros, apostilas e textos
+	
 	public void alugar(ItemAcervo alugado,Date dataAluguel, int prazo, int cod){
 		Usuario vaiAlugar = null;
 
@@ -164,6 +169,20 @@ String nomeBiblioteca;
 		
 		
 	}
+	// reserva livro, apostila ou texto
+	public void reservar(Usuario usu, ItemAcervo reserva){
+		if(reserva instanceof Livro){
+			usu.reservar(reserva);
+			this.livros.put((Livro)reserva, new Integer(this.livros.get((Livro)reserva).intValue() -1));
+		}else if(reserva instanceof Apostila){
+			usu.reservar(reserva);
+			this.apostilas.put((Apostila)reserva, new Integer(this.apostilas.get((Apostila)reserva).intValue() -1));
+		}else if(reserva instanceof Texto){
+			usu.reservar(reserva);
+			this.textos.put((Texto)reserva, new Integer (this.textos.get((Texto)reserva).intValue() -1));
+		}
+	}
+	// calcula a quantidade de dias atrasados na entrega
 	public double CalcDias(Calendar dataEnt, Calendar dataLim){
 		int dias = 1;
 
@@ -171,14 +190,8 @@ String nomeBiblioteca;
 			
 			dataLim.set(Calendar.DAY_OF_MONTH,dataLim.get(Calendar.DAY_OF_MONTH)+1);
 			dias++;
-		}
-		
+		}		
 		return dias;
-		
-
-		
-		
-
 	}
 	public int veriUsu(Usuario usu){
 		int valor = 0,i;		
