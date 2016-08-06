@@ -41,7 +41,26 @@ public class Main {
 		Calendar diaLim = Calendar.getInstance();
 		diaLim.setTime(alugado.getDataDevolucao());
 		diaEntrega.setTime(dt);
-		if (alugado.getPago()==false){
+		if (alugado.getPago()){
+			if (biblioteca.CalcDias(diaEntrega,diaLim) > 0 ){
+				if(alugado instanceof Livro){
+					multa  = 2.0;
+					System.out.printf("O valor a ser pago é: %f. "
+							+ "Valor da multa por %d dias de atraso:"
+							+ "%f",(multa*biblioteca.CalcDias(diaEntrega,diaLim)), alugado.getCusto());
+				}else if(alugado instanceof Apostila){
+					multa  = 1.5;
+					System.out.printf("O valor a ser pago é: %f. "
+							+ "Valor da multa por %d dias de atraso:"
+							+ "%f",(multa*biblioteca.CalcDias(diaEntrega,diaLim)), alugado.getCusto());
+				}else if(alugado instanceof Texto){
+					multa  = 2.0;
+					System.out.printf("O valor a ser pago é: %f. "
+							+ "Valor da multa por %d dias de atraso:"
+							+ "%f",(multa*biblioteca.CalcDias(diaEntrega,diaLim)), alugado.getCusto());
+				}
+			}
+		}else {
 			if (biblioteca.CalcDias(diaEntrega,diaLim) > 0 ){
 				if(alugado instanceof Livro){
 					multa  = 2.0;
@@ -60,8 +79,10 @@ public class Main {
 							+ "%f",(alugado.getCusto() + (multa*biblioteca.CalcDias(diaEntrega,diaLim))), alugado.getCusto(),biblioteca.CalcDias(diaEntrega,diaLim));
 				}
 				
-			}			
-		}else if()
+			}else{
+				System.out.printf("O valor a ser pago é: %f. ",alugado.getCusto());
+			}
+		}
 
 		System.out.println("Escolha o item a ser devolvido: ");
 		for(int i = 0; i < aluPeUsu.length; i++){
