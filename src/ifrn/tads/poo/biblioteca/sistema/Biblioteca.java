@@ -72,7 +72,7 @@ String nomeBiblioteca;
 		int indice = -1,i = 0;		
 		Usuario[] listUsu = new Usuario[this.clientes.size()];
 		listUsu = listUsu();
-		while(i < listUsu.length){
+		for(i = 0 ; i < listUsu.length; i++){
 			if(listUsu[i].getCod() == cod){
 				indice = i;				
 				break;

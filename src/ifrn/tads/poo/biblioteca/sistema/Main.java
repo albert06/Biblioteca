@@ -442,7 +442,7 @@ public class Main {
 									if(sc.hasNextInt())
 										cdgDig = sc.nextInt();
 									try{
-										listarAlugados(cdgDig - 1, biblioteca);
+										listarAlugados(cdgDig , biblioteca);
 									}catch(IndexOutOfBoundsException e){
 										System.out.println("Código inválido do usuário!");
 									}
