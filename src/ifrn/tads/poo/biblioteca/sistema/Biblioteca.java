@@ -173,6 +173,12 @@ String nomeBiblioteca;
 			this.apostilas.put((Apostila)alugado, new Integer(this.apostilas.get((Apostila)alugado).intValue() - 1));
 		if(veriReserva(alugado,vaiAlugar)){
 			vaiAlugar.retirarReservado(alugado);
+			if(alugado instanceof Livro)
+				adicionarLivro((Livro)alugado, new Integer(this.livros.get((Livro)alugado).intValue() + 1));
+			else if(alugado instanceof Apostila)
+				adicionarApostila((Apostila)alugado, new Integer(this.apostilas.get((Apostila)alugado).intValue() + 1));
+			else if(alugado instanceof Texto)
+				adicionarTexto((Texto)alugado, new Integer(this.textos.get((Texto)alugado).intValue() + 1));
 		}			
 		
 	}	
