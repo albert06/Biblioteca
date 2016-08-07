@@ -280,10 +280,7 @@ public class Main {
 		Usuario usu [] = new Usuario[biblioteca.qtdUsu()];
 		usu = biblioteca.listUsu();
 		for(int i = 0 ; i < usu.length ; i++){
-			System.out.println(usu[i].getNome());
-			System.out.println(usu[i].getEnd());
-			System.out.println(usu[i].getCPF());
-			System.out.println(usu[i].getCod());
+			
 			System.out.printf("Nome: %s, Endereço: %s, CPF: %s, Código: %d\n",usu[i].getNome(),usu[i].getEnd(),usu[i].getCPF(),usu[i].getCod());
 		}
 	}
@@ -318,53 +315,27 @@ public class Main {
 				+ "Para começar digite o nome da sua biblioteca: ");
 		nome = sc.nextLine();
 		biblioteca = new Biblioteca(nome);
-		System.out.println("1 Adicionar Administrador\n2 Adicionar Usuario\n3 Menu Administrador\n4 Menu Usuarios\n");
+		System.out.println("Cadastre um Administrador");
+		String cpfA = null,nomeA = null,endeA = null,senha = null;
+		
+		System.out.print("Digite o nome: ");
+		if(sc.hasNext())
+			nomeA = sc.next();
+		System.out.print("Digite o endereço: ");
+		if(sc.hasNext())
+			endeA = sc.next();
+		System.out.print("Digite o cpf: ");
+		if(sc.hasNext())
+			cpfA = sc.next();		
+		System.out.println("Senha: ");
+		if(sc.hasNext())
+			senha = sc.next();
+		addAdm(biblioteca, cdgAdm++,nomeA, endeA, cpfA, senha);
+		System.out.println("0 Para sair\n1 Menu Administrador\n2 Menu Usuarios\n");
 		opcao = sc.nextInt();
 		while(opcao != 0){
-			switch(opcao){
+			switch(opcao){				
 				case 1:
-					String cpfA = null,nomeA = null,endeA = null,senha = null;
-					
-					System.out.print("Digite o nome: ");
-					if(sc.hasNext())
-						nomeA = sc.next();
-					System.out.print("Digite o endereço: ");
-					if(sc.hasNext())
-						endeA = sc.next();
-					System.out.print("Digite o cpf: ");
-					if(sc.hasNext())
-						cpfA = sc.next();		
-					System.out.println("Senha: ");
-					if(sc.hasNext())
-						senha = sc.next();
-					addAdm(biblioteca, cdgAdm++,nomeA, endeA, cpfA, senha);
-					
-					break;
-				case 2:
-					String cpfU = null,nomeU = null, enderecoU = null;;
-					Usuario usu;
-					System.out.print("Digite o nome: ");
-					if(sc.hasNext())
-						nomeU = sc.next();
-					System.out.print("Digite o endereço: ");
-					if(sc.hasNext())
-						enderecoU = sc.next();
-					System.out.print("Digite o cpf: ");
-					if(sc.hasNext())
-						cpfU = sc.next();					
-					usu = new Usuario(cdgUsu, nomeU, enderecoU, cpfU);
-					if(biblioteca.veriUsu(usu) == 1){
-						System.out.println("Usuario ja cadastrado!");
-					}else if(biblioteca.veriUsu(usu) == 2){
-						System.out.println("CPF não disponivel para cadastro!");
-						}
-					try {
-						biblioteca.addUsuario(usu);
-					} catch (FalhaNoCadastroException e) {					
-						e.printStackTrace();
-					}
-					break;
-				case 3:
 					String veri = null;
 					int opA = -1, esA;
 					System.out.println("Digite sua senha");
@@ -503,21 +474,84 @@ public class Main {
 									}
 									
 									break;
+								case 9:
+									int cadastro = 0;
+									System.out.println("Cadastro de Admnistrador digite 1\n2 Usuários");
+									if(sc.hasNextInt())
+										cadastro = sc.nextInt();
+									while(cadastro != 0){
+										switch(cadastro){
+											case 1:
+												cpfA = null;
+												nomeA = null;
+												endeA = null;
+												senha = null;
+												
+												System.out.print("Digite o nome: ");
+												if(sc.hasNext())
+													nomeA = sc.next();
+												System.out.print("Digite o endereço: ");
+												if(sc.hasNext())
+													endeA = sc.next();
+												System.out.print("Digite o cpf: ");
+												if(sc.hasNext())
+													cpfA = sc.next();		
+												System.out.println("Senha: ");
+												if(sc.hasNext())
+													senha = sc.next();
+												addAdm(biblioteca, cdgAdm++,nomeA, endeA, cpfA, senha);
+												
+												break;
+											case 2:
+												String cpfU = null,nomeU = null, enderecoU = null;;
+												Usuario usu;
+												System.out.print("Digite o nome: ");
+												if(sc.hasNext())
+													nomeU = sc.next();
+												System.out.print("Digite o endereço: ");
+												if(sc.hasNext())
+													enderecoU = sc.next();
+												System.out.print("Digite o cpf: ");
+												if(sc.hasNext())
+													cpfU = sc.next();					
+												usu = new Usuario(cdgUsu, nomeU, enderecoU, cpfU);
+												if(biblioteca.veriUsu(usu) == 1){
+													System.out.println("Usuario ja cadastrado!");
+												}else if(biblioteca.veriUsu(usu) == 2){
+													System.out.println("CPF não disponivel para cadastro!");
+													}
+												try {
+													biblioteca.addUsuario(usu);
+													cdgUsu++;
+												} catch (FalhaNoCadastroException e) {					
+													e.printStackTrace();
+												}
+												break;
+											default:
+												break;
+										}
+										System.out.println("Cadastro de Admnistrador digite 1\n2 Usuários");
+										if(sc.hasNextInt())
+											cadastro = sc.nextInt();
+									}	
+									break;
 								default:
 									break;
 							}
 							System.out.println("Digite 0 para sair\n1 para adicionar livros\n2 Para adicionar textos\n"
 									+ "3 Para adicionar apostilas\n4 Para listar Usuarios\n5 Para ver os itens alugados"
-									+ "\n6 Para ver os itens reservados\n7 Para Alugar\n8 Para devolver");
+									+ "\n6 Para ver os itens reservados\n7 Para Alugar\n8 Para devolver\n9 Cadastro");
 							if(sc.hasNextInt())
 								opA = sc.nextInt();
 						}
 						
 					}
 					break;
-				case 4:
+				case 2:
 					int opU = -1;
 					System.out.println("Digite 0 para sair\n1 Para ver os itens disponiveis\n2 Itens alugados\n3 Reservar");
+					if(sc.hasNextInt())
+						opU = sc.nextInt();
 					while(opU != 0){
 						switch(opU){
 							case 1:
@@ -551,13 +585,16 @@ public class Main {
 							default:
 								break;
 						}
+						System.out.println("Digite 0 para sair\n1 Para ver os itens disponiveis\n2 Itens alugados\n3 Reservar");
+						if(sc.hasNextInt())
+							opU = sc.nextInt();
 					}
 					break;
 				default:
 					break;
 			}
 			
-			System.out.println("1 Adicionar Administrador\n2 Adicionar Usuario\n3 Menu Administrador\n4 Menu Usuarios\n");
+			System.out.println("0 Para sair\n1 Menu Administrador\n2 Menu Usuarios\n");
 			if(sc.hasNextInt())
 				opcao = sc.nextInt();
 		}
