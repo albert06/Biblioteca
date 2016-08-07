@@ -183,13 +183,13 @@ public class Main {
 							+ "Quantidade Disponivel: %d, Valor do Aluguel: %f\n"
 							+ "",listaL[i].getCdg(),listaL[i].getTitulo(),listaL[i].getAutor(),listaL[i].getISBN(),listaL[i].getEdi(),biblioteca.qtdDoLivro(listaL[i]), listaL[i].getCusto());
 				}
-				System.out.println("Digite o código do livro que deseja alugar: ");
+				System.out.print("Digite o código do livro que deseja alugar: ");
 				if(sc.hasNextInt())
 					escolha = sc.nextInt();
 				if(biblioteca.qtdDoLivro(listaL[escolha-1]) > 0){
 					biblioteca.alugar(listaL[escolha - 1], data,7, codUsu);
 					System.out.printf("O livro deve ser entregue até o dia: ");
-					System.out.println(format.format(listaL[escolha].getDataDevolucao()));
+					System.out.println(format.format(listaL[escolha - 1].getDataDevolucao()));
 				}else
 					System.out.println("O livro não esta disponivel para alugar!");
 				
@@ -209,7 +209,7 @@ public class Main {
 				if(biblioteca.qtdUmTxt(listaT[escolha-1]) > 0){
 					biblioteca.alugar(listaT[escolha - 1], data, 15, codUsu);
 					System.out.printf("O texto deve ser entregue até o dia: ");
-					System.out.println(format.format(listaT[escolha].getDataDevolucao()));
+					System.out.println(format.format(listaT[escolha - 1].getDataDevolucao()));
 				}else
 					System.out.println("O texto não está disponivel para alugar!");
 				
@@ -228,7 +228,7 @@ public class Main {
 				if(biblioteca.qtdUmaApo(listaA[escolha-1]) > 0){
 					biblioteca.alugar(listaA[escolha - 1], data, 15, codUsu);
 					System.out.printf("A apostila deve ser entregue até o dia: ");
-					System.out.println(format.format(listaA[escolha].getDataDevolucao()));
+					System.out.println(format.format(listaA[escolha - 1].getDataDevolucao()));
 				}else
 					System.out.println("A apostila não está disponivel para alugar!");
 				break;
@@ -297,7 +297,7 @@ public class Main {
 	public static void listarReservados(int cdgUsu, Biblioteca bibli){
 		Usuario usu;
 		usu = bibli.buscaUsuario(cdgUsu);
-		ItemAcervo itens [] = new ItemAcervo[usu.qtdAlugados()];
+		ItemAcervo itens [] = new ItemAcervo[usu.qtdReservados()];
 		itens = usu.listaReservados();
 		for(int i = 0 ; i < itens.length ; i++){
 			System.out.printf("Titulo: %s, Autor: %s \n",itens[i].getTitulo(),itens[i].getAutor());
@@ -337,14 +337,14 @@ public class Main {
 			switch(opcao){				
 				case 1:
 					String veri = null;
-					int opA = -1, esA;
+					int opA = -1;
 					System.out.println("Digite sua senha");
 					if(sc.hasNext())
 						veri = sc.next();
 					if(biblioteca.loguinAdm(veri)){
 						System.out.println("Digite 0 para sair\n1 para adicionar livros\n2 Para adicionar textos\n"
 								+ "3 Para adicionar apostilas\n4 Para listar Usuarios\n5 Para ver os itens alugados"
-								+ "\n6 Para ver os itens reservados\n7 Para Alugar\n8 Para devolver");
+								+ "\n6 Para ver os itens reservados\n7 Para Alugar\n8 Para devolver\n9 Cadastro");
 						if(sc.hasNextInt())
 							opA = sc.nextInt();
 						while(opA != 0){
@@ -442,7 +442,7 @@ public class Main {
 									if(sc.hasNextInt())
 										cdgDig = sc.nextInt();
 									try{
-										listarAlugados(cdgDig, biblioteca);
+										listarAlugados(cdgDig - 1, biblioteca);
 									}catch(IndexOutOfBoundsException e){
 										System.out.println("Código inválido do usuário!");
 									}
@@ -463,7 +463,7 @@ public class Main {
 									break;
 								case 8:
 									int cdgDi = -1;
-									System.out.println("Digite o código do usuário na qual deseje ver os itens reservados: ");
+									System.out.println("Digite o código do usuário na qual deseje devolver alguem item: ");
 									listarUsuario(biblioteca);
 									if(sc.hasNextInt())
 										cdgDi = sc.nextInt();
