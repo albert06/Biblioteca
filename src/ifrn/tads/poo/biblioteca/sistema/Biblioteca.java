@@ -74,7 +74,7 @@ String nomeBiblioteca;
 		listUsu = listUsu();
 		for(i = 0 ; i < listUsu.length; i++){
 			if(listUsu[i].getCod() == cod){
-				indice = i;				
+				indice = i;
 				break;
 			}
 			i++;
@@ -162,24 +162,20 @@ String nomeBiblioteca;
 		cal.setTime(dataAluguel);
 		cal.add(Calendar.DAY_OF_MONTH, prazo);
 		alugado.setDataDevolucao(cal.getTime());		
-		vaiAlugar = buscaUsuario(cod);
-		vaiAlugar.addAlugado(alugado);
-		if(alugado instanceof Livro)
-			this.livros.put((Livro)alugado, new Integer(this.livros.get((Livro)alugado).intValue() - 1));
-		else if(alugado instanceof Texto)
-			this.textos.put((Texto)alugado, new Integer(this.textos.get((Texto)alugado).intValue() - 1));
-
-		else if(alugado instanceof Apostila)
-			this.apostilas.put((Apostila)alugado, new Integer(this.apostilas.get((Apostila)alugado).intValue() - 1));
+		vaiAlugar = buscaUsuario(cod);				
 		if(veriReserva(alugado,vaiAlugar)){
 			vaiAlugar.retirarReservado(alugado);
+			vaiAlugar.addAlugado(alugado);
+		}else{
 			if(alugado instanceof Livro)
-				adicionarLivro((Livro)alugado, new Integer(this.livros.get((Livro)alugado).intValue() + 1));
-			else if(alugado instanceof Apostila)
-				adicionarApostila((Apostila)alugado, new Integer(this.apostilas.get((Apostila)alugado).intValue() + 1));
+				this.livros.put((Livro)alugado, new Integer(this.livros.get((Livro)alugado).intValue() - 1));
 			else if(alugado instanceof Texto)
-				adicionarTexto((Texto)alugado, new Integer(this.textos.get((Texto)alugado).intValue() + 1));
-		}			
+				this.textos.put((Texto)alugado, new Integer(this.textos.get((Texto)alugado).intValue() - 1));
+
+			else if(alugado instanceof Apostila)
+				this.apostilas.put((Apostila)alugado, new Integer(this.apostilas.get((Apostila)alugado).intValue() - 1));
+			vaiAlugar.addAlugado(alugado);
+		}
 		
 	}	
 	// verifica se a senha apresentada pertence a algum adm

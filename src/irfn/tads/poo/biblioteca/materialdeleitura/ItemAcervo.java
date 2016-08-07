@@ -4,7 +4,7 @@ import java.util.Date;
 
 
 public abstract class ItemAcervo {
-	double custo;
+	double custo,multa;
 	boolean pago;
 	Date dataAluguel,dataDevolucao;
 	Calendar cal = Calendar.getInstance();
@@ -12,6 +12,9 @@ public abstract class ItemAcervo {
 	String autor, titulo;
 	public void setCusto(double custo){
 		this.custo = custo;
+	}
+	public double getMulta(){
+		return this.multa;
 	}
 	public double getCusto(){
 		return this.custo;

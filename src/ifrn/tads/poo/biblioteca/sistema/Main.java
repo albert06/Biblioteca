@@ -40,8 +40,8 @@ public class Main {
 	}
 	public static void devolver(int codUsu,Biblioteca biblioteca, Scanner sc){
 		Usuario usu = null;
-		int dev = 0,i;
-		double multa = 0;
+		int dev = 0,i;		
+		String dataRecebida = null;
 		usu = biblioteca.buscaUsuario(codUsu);
 		ItemAcervo[] aluPeUsu = new ItemAcervo[usu.qtdAlugados()];
 		aluPeUsu = usu.listaAlugados();
@@ -50,9 +50,10 @@ public class Main {
 			System.out.printf("Número: %d, Titulo: %s",i,aluPeUsu[i].getTitulo());
 		}
 		if(sc.hasNextInt())
-			dev = sc.nextInt() - 1;
+			dev = sc.nextInt();
 		System.out.println("Digite uma data nesse formato dd/mm/yyyy: ");
-		String dataRecebida = sc.nextLine();
+		if(sc.hasNext())
+			dataRecebida = sc.next();
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");  
 		Date dt = null;
 		try {
@@ -66,18 +67,18 @@ public class Main {
 					if(aluPeUsu[dev] instanceof Livro){
 						
 						System.out.printf("O valor a ser pago é: %f. "
-								+ "Valor da aluPeUsu[dev].getCusto() por %d dias de atraso:"
-								+ "%f",(aluPeUsu[dev].getCusto()*biblioteca.CalcDias(diaEntrega,diaLim)), aluPeUsu[dev].getCusto());
+								+ "Valor da multa por %d dias de atraso:"
+								+ "%f",(aluPeUsu[dev].getMulta()*biblioteca.CalcDias(diaEntrega,diaLim)),aluPeUsu[dev].getMulta(),biblioteca.CalcDias(diaEntrega,diaLim));
 					}else if(aluPeUsu[dev] instanceof Apostila){
 						
 						System.out.printf("O valor a ser pago é: %f. "
-								+ "Valor da aluPeUsu[dev].getCusto() por %d dias de atraso:"
-								+ "%f",(aluPeUsu[dev].getCusto()*biblioteca.CalcDias(diaEntrega,diaLim)), aluPeUsu[dev].getCusto());
+								+ "Valor da multa por %d dias de atraso:"
+								+ "%f",(aluPeUsu[dev].getMulta()*biblioteca.CalcDias(diaEntrega,diaLim)),aluPeUsu[dev].getMulta(),biblioteca.CalcDias(diaEntrega,diaLim));
 					}else if(aluPeUsu[dev] instanceof Texto){
 						
 						System.out.printf("O valor a ser pago é: %f. "
-								+ "Valor da aluPeUsu[dev].getCusto() por %d dias de atraso:"
-								+ "%f",(aluPeUsu[dev].getCusto()*biblioteca.CalcDias(diaEntrega,diaLim)), aluPeUsu[dev].getCusto());
+								+ "Valor da multa por %d dias de atraso:"
+								+ "%f",(aluPeUsu[dev].getMulta()*biblioteca.CalcDias(diaEntrega,diaLim)),aluPeUsu[dev].getMulta(),biblioteca.CalcDias(diaEntrega,diaLim));
 					}
 				}
 			}else {
@@ -85,18 +86,18 @@ public class Main {
 					if(aluPeUsu[dev] instanceof Livro){
 						
 						System.out.printf("O valor a ser pago é: %f. "
-								+ "Valor do livro: %f + Valor da aluPeUsu[dev].getCusto() por %d dias de atraso:"
-								+ "%f",(aluPeUsu[dev].getCusto() + (aluPeUsu[dev].getCusto()*biblioteca.CalcDias(diaEntrega,diaLim))), aluPeUsu[dev].getCusto(),biblioteca.CalcDias(diaEntrega,diaLim));
+								+ "Valor do livro: %f + Valor da multa por %d dias de atraso:"
+								+ "%f",(aluPeUsu[dev].getMulta() + (aluPeUsu[dev].getMulta()*biblioteca.CalcDias(diaEntrega,diaLim))), aluPeUsu[dev].getCusto(),(aluPeUsu[dev].getMulta()*biblioteca.CalcDias(diaEntrega,diaLim)),biblioteca.CalcDias(diaEntrega,diaLim));
 					}else if(aluPeUsu[dev] instanceof Apostila){
 						
 						System.out.printf("O valor a ser pago é: %f. "
-								+ "Valor da apostila: %f + Valor da aluPeUsu[dev].getCusto() por %d dias de atraso:"
-								+ "%f",(aluPeUsu[dev].getCusto() + (aluPeUsu[dev].getCusto()*biblioteca.CalcDias(diaEntrega,diaLim))), aluPeUsu[dev].getCusto(),biblioteca.CalcDias(diaEntrega,diaLim));
+								+ "Valor da apostila: %f + multa por %d dias de atraso:"
+								+ "%f",(aluPeUsu[dev].getMulta() + (aluPeUsu[dev].getMulta()*biblioteca.CalcDias(diaEntrega,diaLim))), aluPeUsu[dev].getCusto(),(aluPeUsu[dev].getMulta()*biblioteca.CalcDias(diaEntrega,diaLim)),biblioteca.CalcDias(diaEntrega,diaLim));
 					}else if(aluPeUsu[dev] instanceof Texto){
 						
 						System.out.printf("O valor a ser pago é: %f. "
-								+ "Valor do Texto: %f + Valor da aluPeUsu[dev].getCusto() por %d dias de atraso:"
-								+ "%f",(aluPeUsu[dev].getCusto() + (aluPeUsu[dev].getCusto()*biblioteca.CalcDias(diaEntrega,diaLim))), aluPeUsu[dev].getCusto(),biblioteca.CalcDias(diaEntrega,diaLim));
+								+ "Valor do Texto: %f + Valor da multa por %d dias de atraso:"
+								+ "%f",(aluPeUsu[dev].getMulta() + (aluPeUsu[dev].getMulta()*biblioteca.CalcDias(diaEntrega,diaLim))), aluPeUsu[dev].getCusto(),(aluPeUsu[dev].getMulta()*biblioteca.CalcDias(diaEntrega,diaLim)),biblioteca.CalcDias(diaEntrega,diaLim));
 					}
 					
 				}else{
@@ -160,7 +161,7 @@ public class Main {
 				if(sc.hasNextInt())
 					escolha = sc.nextInt();
 				if(biblioteca.qtdUmTxt(tL[escolha - 1]) > 0)
-					biblioteca.reservar(usu, tL[escolha]);
+					biblioteca.reservar(usu, tL[escolha -1]);
 				else
 					System.out.println("O Texto não está disponivel para reserva!");
 				break;
@@ -170,6 +171,7 @@ public class Main {
 	}
 	public static void alugar(int tipo, int codUsu, Biblioteca biblioteca, Scanner sc){
 		SimpleDateFormat format = new SimpleDateFormat();
+		String pagar = null;
 		int escolha = 0, i;
 		Date data = new Date();
 		switch(tipo){
@@ -177,7 +179,7 @@ public class Main {
 
 				Livro listaL[] = new Livro[biblioteca.tamLivros()];
 				listaL = biblioteca.listLivros();									
-				System.out.println("Livros disponiveis\n");
+				System.out.println("Livros disponiveis:\n");
 				for(i = 0 ; i < listaL.length ; i++){
 					System.out.printf("Cod: %d, Titulo: %s, Autor: %s, ISBN: %s, Edição: %d, "
 							+ "Quantidade Disponivel: %d, Valor do Aluguel: %f\n"
@@ -187,6 +189,15 @@ public class Main {
 				if(sc.hasNextInt())
 					escolha = sc.nextInt();
 				if(biblioteca.qtdDoLivro(listaL[escolha-1]) > 0){
+					System.out.println("Deseja pagar?(s/n)");
+					if(sc.hasNext())
+						pagar = sc.next();
+					if(pagar.compareTo("s") == 0){
+						System.out.printf("Valor a ser pago: %f\n",listaL[escolha - 1].getCusto());
+						listaL[escolha - 1].setPago(true);
+					}else if(pagar.compareTo("n") == 0){
+						
+					}
 					biblioteca.alugar(listaL[escolha - 1], data,7, codUsu);
 					System.out.printf("O livro deve ser entregue até o dia: ");
 					System.out.println(format.format(listaL[escolha - 1].getDataDevolucao()));
@@ -198,9 +209,9 @@ public class Main {
 			case 2:
 				Texto listaT[] = new Texto[biblioteca.qtdTxt()];
 				listaT = biblioteca.listTxt();
-				System.out.println("Textos disponiveis: ");
+				System.out.println("Textos disponiveis: \n");
 				for (i = 0; i < listaT.length; i++) {
-					System.out.printf("Cod: %d, Titulo: %s, Autor: %s"
+					System.out.printf("Cod: %d, Titulo: %s, Autor: %s\n"
 							+ "", listaT[i].getCodigoItem(), listaT[i].getTitulo(), listaT[i].getAutor());
 				}
 				System.out.println("Digite o código do texto que deseja alugar: ");
@@ -295,8 +306,7 @@ public class Main {
 		}
 	}
 	public static void listarReservados(int cdgUsu, Biblioteca bibli){
-		Usuario usu;
-		usu = bibli.buscaUsuario(cdgUsu);
+		Usuario usu = bibli.buscaUsuario(cdgUsu);		
 		ItemAcervo itens [] = new ItemAcervo[usu.qtdReservados()];
 		itens = usu.listaReservados();
 		for(int i = 0 ; i < itens.length ; i++){
@@ -351,7 +361,7 @@ public class Main {
 							switch(opA){
 								case 1:
 									String tit = null, autor = null, isbn = null;
-									double valor = 0;
+									double valor = 0, multaL = 0;
 									int qtd = 0,edi = 0;					
 									System.out.println("Titulo: ");
 									if(sc.hasNext()){
@@ -369,11 +379,14 @@ public class Main {
 									System.out.println("Quantidade: ");
 									if(sc.hasNextInt())
 										qtd = sc.nextInt();
+									System.out.println("Valor da Multa: ");
+									if(sc.hasNextDouble())
+										multaL = sc.nextDouble();
 									System.out.println("Insira o valor do aluguel do livro: ");
 									if(sc.hasNextDouble())
 										valor = sc.nextDouble();
 									if(biblioteca.verificarISBN(isbn)){
-										Livro novo = new Livro(tit,autor,isbn,new Integer(edi), cdgLivro++,valor);
+										Livro novo = new Livro(tit,autor,isbn,new Integer(edi), cdgLivro++,valor,multaL);
 										biblioteca.adicionarLivro(novo, qtd);
 									}else{
 										System.out.println("Número do ISBN invalido ou repetido!");
@@ -382,7 +395,7 @@ public class Main {
 									break;
 								case 2:
 									String tiT = null, autorT = null;
-									double valorT = -1;
+									double valorT = -1,multaT = 0;
 									int qtdT = 0;
 									System.out.println("Titulo: ");
 									if(sc.hasNext()){
@@ -397,12 +410,15 @@ public class Main {
 									System.out.println("Quantidade: ");
 									if(sc.hasNextInt())
 										qtdT = sc.nextInt();
-									Texto txt = new Texto(tiT, autorT, valorT, cdgTexto++);
+									System.out.println("Valor da multa: ");
+									if(sc.hasNextDouble())
+										multaT = sc.nextDouble();
+									Texto txt = new Texto(tiT, autorT, valorT, cdgTexto++,multaT);
 									biblioteca.adicionarTexto(txt, new Integer(qtdT));
 									break;
 								case 3:
 									String tiA = null, autoA = null;
-									double valorA = -1;
+									double valorA = -1, multaA = 0;
 									int qtdA = 0;
 									System.out.println("Titulo: ");
 									if(sc.hasNext()){
@@ -417,7 +433,10 @@ public class Main {
 									System.out.println("Quantidade: ");
 									if(sc.hasNextInt())
 										qtdA = sc.nextInt();
-									Apostila apo = new Apostila(tiA, autoA, cdgApostila++, valorA);
+									System.out.println("Valor da multa: ");
+									if(sc.hasNextDouble())
+										multaA = sc.nextDouble();
+									Apostila apo = new Apostila(tiA, autoA, cdgApostila++, valorA,multaA);
 									biblioteca.adicionarApostila(apo, new Integer(qtdA));;
 									break;
 								case 4:
@@ -442,7 +461,7 @@ public class Main {
 									if(sc.hasNextInt())
 										cdgDig = sc.nextInt();
 									try{
-										listarAlugados(cdgDig , biblioteca);
+										listarReservados(cdgDig, biblioteca);
 									}catch(IndexOutOfBoundsException e){
 										System.out.println("Código inválido do usuário!");
 									}
@@ -476,7 +495,7 @@ public class Main {
 									break;
 								case 9:
 									int cadastro = 0;
-									System.out.println("Cadastro de Admnistrador digite 1\n2 Usuários");
+									System.out.println("Cadastro de Admnistrador digite 1\n2 Usuários\n0 para sair\n");
 									if(sc.hasNextInt())
 										cadastro = sc.nextInt();
 									while(cadastro != 0){
@@ -530,7 +549,7 @@ public class Main {
 											default:
 												break;
 										}
-										System.out.println("Cadastro de Admnistrador digite 1\n2 Usuários");
+										System.out.println("Cadastro de Admnistrador digite 1\n2 Usuários\n0 para sair\n");
 										if(sc.hasNextInt())
 											cadastro = sc.nextInt();
 									}	

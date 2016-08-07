@@ -6,13 +6,14 @@ public class Livro extends ItemAcervo{
 String isbn;
 	
 	Integer edicao; 
-	public Livro(String titulo, String autor, String isbn, Integer edicao, int cdg, double custo){
+	public Livro(String titulo, String autor, String isbn, Integer edicao, int cdg, double custo, double multa){
 		this.titulo = titulo;
 		this.autor = autor;
 		this.isbn = isbn;
 		this.edicao = edicao;
 		this.codigoItem = cdg;
 		this.custo = custo;
+		this.multa = multa;
 	}
 	public String getISBN(){
 		return this.isbn;
