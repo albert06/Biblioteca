@@ -64,39 +64,39 @@ public class Main {
 			if (aluPeUsu[dev].getPago()){
 				if (biblioteca.CalcDias(diaEntrega,diaLim) > 0 ){
 					if(aluPeUsu[dev] instanceof Livro){
-						multa  = 2.0;
+						
 						System.out.printf("O valor a ser pago é: %f. "
-								+ "Valor da multa por %d dias de atraso:"
-								+ "%f",(multa*biblioteca.CalcDias(diaEntrega,diaLim)), aluPeUsu[dev].getCusto());
+								+ "Valor da aluPeUsu[dev].getCusto() por %d dias de atraso:"
+								+ "%f",(aluPeUsu[dev].getCusto()*biblioteca.CalcDias(diaEntrega,diaLim)), aluPeUsu[dev].getCusto());
 					}else if(aluPeUsu[dev] instanceof Apostila){
-						multa  = 1.5;
+						
 						System.out.printf("O valor a ser pago é: %f. "
-								+ "Valor da multa por %d dias de atraso:"
-								+ "%f",(multa*biblioteca.CalcDias(diaEntrega,diaLim)), aluPeUsu[dev].getCusto());
+								+ "Valor da aluPeUsu[dev].getCusto() por %d dias de atraso:"
+								+ "%f",(aluPeUsu[dev].getCusto()*biblioteca.CalcDias(diaEntrega,diaLim)), aluPeUsu[dev].getCusto());
 					}else if(aluPeUsu[dev] instanceof Texto){
-						multa  = 2.0;
+						
 						System.out.printf("O valor a ser pago é: %f. "
-								+ "Valor da multa por %d dias de atraso:"
-								+ "%f",(multa*biblioteca.CalcDias(diaEntrega,diaLim)), aluPeUsu[dev].getCusto());
+								+ "Valor da aluPeUsu[dev].getCusto() por %d dias de atraso:"
+								+ "%f",(aluPeUsu[dev].getCusto()*biblioteca.CalcDias(diaEntrega,diaLim)), aluPeUsu[dev].getCusto());
 					}
 				}
 			}else {
 				if (biblioteca.CalcDias(diaEntrega,diaLim) > 0 ){
 					if(aluPeUsu[dev] instanceof Livro){
-						multa  = 2.0;
+						
 						System.out.printf("O valor a ser pago é: %f. "
-								+ "Valor do livro: %f + Valor da multa por %d dias de atraso:"
-								+ "%f",(aluPeUsu[dev].getCusto() + (multa*biblioteca.CalcDias(diaEntrega,diaLim))), aluPeUsu[dev].getCusto(),biblioteca.CalcDias(diaEntrega,diaLim));
+								+ "Valor do livro: %f + Valor da aluPeUsu[dev].getCusto() por %d dias de atraso:"
+								+ "%f",(aluPeUsu[dev].getCusto() + (aluPeUsu[dev].getCusto()*biblioteca.CalcDias(diaEntrega,diaLim))), aluPeUsu[dev].getCusto(),biblioteca.CalcDias(diaEntrega,diaLim));
 					}else if(aluPeUsu[dev] instanceof Apostila){
-						multa  = 1.5;
+						
 						System.out.printf("O valor a ser pago é: %f. "
-								+ "Valor da apostila: %f + Valor da multa por %d dias de atraso:"
-								+ "%f",(aluPeUsu[dev].getCusto() + (multa*biblioteca.CalcDias(diaEntrega,diaLim))), aluPeUsu[dev].getCusto(),biblioteca.CalcDias(diaEntrega,diaLim));
+								+ "Valor da apostila: %f + Valor da aluPeUsu[dev].getCusto() por %d dias de atraso:"
+								+ "%f",(aluPeUsu[dev].getCusto() + (aluPeUsu[dev].getCusto()*biblioteca.CalcDias(diaEntrega,diaLim))), aluPeUsu[dev].getCusto(),biblioteca.CalcDias(diaEntrega,diaLim));
 					}else if(aluPeUsu[dev] instanceof Texto){
-						multa  = 2.0;
+						
 						System.out.printf("O valor a ser pago é: %f. "
-								+ "Valor do Texto: %f + Valor da multa por %d dias de atraso:"
-								+ "%f",(aluPeUsu[dev].getCusto() + (multa*biblioteca.CalcDias(diaEntrega,diaLim))), aluPeUsu[dev].getCusto(),biblioteca.CalcDias(diaEntrega,diaLim));
+								+ "Valor do Texto: %f + Valor da aluPeUsu[dev].getCusto() por %d dias de atraso:"
+								+ "%f",(aluPeUsu[dev].getCusto() + (aluPeUsu[dev].getCusto()*biblioteca.CalcDias(diaEntrega,diaLim))), aluPeUsu[dev].getCusto(),biblioteca.CalcDias(diaEntrega,diaLim));
 					}
 					
 				}else{
