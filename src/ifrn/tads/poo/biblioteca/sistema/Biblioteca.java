@@ -148,7 +148,7 @@ String nomeBiblioteca;
 	// adiciona um livro na biblioteca
 	public void adicionarLivro(Livro novo, Integer qtd){
 		if(this.livros.containsKey(novo)){
-			this.livros.put(novo, new Integer(this.livros.get(qtd).intValue() + 1));
+			this.livros.put(novo, new Integer(this.livros.get(novo).intValue() + 1));
 		}
 		this.livros.put(novo, qtd);
 	}
@@ -257,14 +257,14 @@ String nomeBiblioteca;
 	// adiciona uma apostila na biblioteca
 	public void adicionarApostila(Apostila nova, Integer qtd){
 		if(this.apostilas.containsKey(nova)){
-			this.apostilas.put(nova, new Integer(this.apostilas.get(qtd).intValue() + 1));
+			this.apostilas.put(nova, new Integer(this.apostilas.get(nova).intValue() + 1));
 		}
 		this.apostilas.put(nova, qtd);
 	}
 	// adiciona um texto na biblioteca
 	public void adicionarTexto(Texto novo, Integer qtd){
 		if(this.textos.containsKey(novo)){
-			this.textos.put(novo, new Integer(this.textos.get(qtd).intValue() + 1));
+			this.textos.put(novo, new Integer(this.textos.get(novo).intValue() + 1));
 		}
 		this.textos.put(novo, qtd);
 	}

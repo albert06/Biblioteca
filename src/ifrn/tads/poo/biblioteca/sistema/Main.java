@@ -47,7 +47,7 @@ public class Main {
 		aluPeUsu = usu.listaAlugados();
 		System.out.println("Escolha o item a ser devolvido: ");
 		for(i = 0; i < aluPeUsu.length; i++){
-			System.out.printf("Número: %d, Titulo: %s",i,aluPeUsu[i].getTitulo());
+			System.out.printf("Número: %d, Titulo: %s\n",i,aluPeUsu[i].getTitulo());
 		}
 		if(sc.hasNextInt())
 			dev = sc.nextInt();
@@ -67,18 +67,17 @@ public class Main {
 					if(aluPeUsu[dev] instanceof Livro){
 						
 						System.out.printf("O valor a ser pago é: %f. "
-								+ "Valor da multa por %d dias de atraso:"
-								+ "%f",(aluPeUsu[dev].getMulta()*biblioteca.CalcDias(diaEntrega,diaLim)),aluPeUsu[dev].getMulta(),biblioteca.CalcDias(diaEntrega,diaLim));
+								+ "Valor da multa por cada dia de atraso:"
+								+ "%f\n",(aluPeUsu[dev].getMulta()*biblioteca.CalcDias(diaEntrega,diaLim)),aluPeUsu[dev].getMulta());
 					}else if(aluPeUsu[dev] instanceof Apostila){
 						
 						System.out.printf("O valor a ser pago é: %f. "
-								+ "Valor da multa por %d dias de atraso:"
-								+ "%f",(aluPeUsu[dev].getMulta()*biblioteca.CalcDias(diaEntrega,diaLim)),aluPeUsu[dev].getMulta(),biblioteca.CalcDias(diaEntrega,diaLim));
+								+ "Valor da multa por cada dia de atraso:"
+								+ "%f\n",(aluPeUsu[dev].getMulta()*biblioteca.CalcDias(diaEntrega,diaLim)),aluPeUsu[dev].getMulta());
 					}else if(aluPeUsu[dev] instanceof Texto){
-						
 						System.out.printf("O valor a ser pago é: %f. "
-								+ "Valor da multa por %d dias de atraso:"
-								+ "%f",(aluPeUsu[dev].getMulta()*biblioteca.CalcDias(diaEntrega,diaLim)),aluPeUsu[dev].getMulta(),biblioteca.CalcDias(diaEntrega,diaLim));
+								+ "Valor da multa por cada dia de atraso:"
+								+ "%f\n",(aluPeUsu[dev].getMulta()*biblioteca.CalcDias(diaEntrega,diaLim)),aluPeUsu[dev].getMulta());
 					}
 				}
 			}else {
@@ -86,18 +85,16 @@ public class Main {
 					if(aluPeUsu[dev] instanceof Livro){
 						
 						System.out.printf("O valor a ser pago é: %f. "
-								+ "Valor do livro: %f + Valor da multa por %d dias de atraso:"
-								+ "%f",(aluPeUsu[dev].getMulta() + (aluPeUsu[dev].getMulta()*biblioteca.CalcDias(diaEntrega,diaLim))), aluPeUsu[dev].getCusto(),(aluPeUsu[dev].getMulta()*biblioteca.CalcDias(diaEntrega,diaLim)),biblioteca.CalcDias(diaEntrega,diaLim));
+								+ "Valor do livro: %f + Valor da multa por cada dia de atraso:"
+								+ "%f\n",(aluPeUsu[dev].getMulta() + (aluPeUsu[dev].getMulta()*biblioteca.CalcDias(diaEntrega,diaLim))), aluPeUsu[dev].getCusto(),(aluPeUsu[dev].getMulta()));
 					}else if(aluPeUsu[dev] instanceof Apostila){
-						
 						System.out.printf("O valor a ser pago é: %f. "
-								+ "Valor da apostila: %f + multa por %d dias de atraso:"
-								+ "%f",(aluPeUsu[dev].getMulta() + (aluPeUsu[dev].getMulta()*biblioteca.CalcDias(diaEntrega,diaLim))), aluPeUsu[dev].getCusto(),(aluPeUsu[dev].getMulta()*biblioteca.CalcDias(diaEntrega,diaLim)),biblioteca.CalcDias(diaEntrega,diaLim));
+								+ "Valor do livro: %f + Valor da multa por cada dia de atraso:"
+								+ "%f\n",(aluPeUsu[dev].getMulta() + (aluPeUsu[dev].getMulta()*biblioteca.CalcDias(diaEntrega,diaLim))), aluPeUsu[dev].getCusto(),(aluPeUsu[dev].getMulta()));
 					}else if(aluPeUsu[dev] instanceof Texto){
-						
 						System.out.printf("O valor a ser pago é: %f. "
-								+ "Valor do Texto: %f + Valor da multa por %d dias de atraso:"
-								+ "%f",(aluPeUsu[dev].getMulta() + (aluPeUsu[dev].getMulta()*biblioteca.CalcDias(diaEntrega,diaLim))), aluPeUsu[dev].getCusto(),(aluPeUsu[dev].getMulta()*biblioteca.CalcDias(diaEntrega,diaLim)),biblioteca.CalcDias(diaEntrega,diaLim));
+								+ "Valor do livro: %f + Valor da multa por cada dia de atraso:"
+								+ "%f\n",(aluPeUsu[dev].getMulta() + (aluPeUsu[dev].getMulta()*biblioteca.CalcDias(diaEntrega,diaLim))), aluPeUsu[dev].getCusto(),(aluPeUsu[dev].getMulta()));
 					}
 					
 				}else{
@@ -404,7 +401,7 @@ public class Main {
 									System.out.println("Autor: ");
 									if(sc.hasNext())
 										autorT = sc.next();
-									System.out.println("Valor da Multa: ");
+									System.out.println("Valor do Alugel: ");
 									if(sc.hasNextDouble())
 										valorT = sc.nextDouble();
 									System.out.println("Quantidade: ");
@@ -427,7 +424,7 @@ public class Main {
 									System.out.println("Autor: ");
 									if(sc.hasNext())
 										autoA = sc.next();
-									System.out.println("Valor da Multa: ");
+									System.out.println("Valor do Aluguel: ");
 									if(sc.hasNextDouble())
 										valorA = sc.nextDouble();
 									System.out.println("Quantidade: ");
